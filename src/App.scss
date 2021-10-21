@@ -1,0 +1,81 @@
+@mixin df($align, $jsc) {
+    display: flex;
+    align-items: $align;
+    justify-content: $jsc;
+}
+
+body{
+    @include df(center, center);
+    min-height: 100vh;
+    width: 100%;
+    font-family: monospace;
+    font-size: 18px;
+    background-color: #edeff3;
+
+    #root{
+      width: 100%;
+      @include df(center, center);
+      flex-direction: column;
+
+        .main_block{
+          @include df(center, space-around);
+          width: 80%;
+          height: 250px;
+          border: 1px solid #00000047;
+          padding: 10px;
+          border-radius: 70px;
+          box-shadow: inset 0 0 6px;
+
+            #form_calc_first{
+                input[name=price]{
+                  width: 100%;
+                  height: 25px;
+                  font-size: 18px;
+                  margin-top: 5px;
+                }
+            }
+
+            #form_calc_second{
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-top: 20px;
+
+                #form_calc_second_child_1,#form_calc_second_child_2{
+                  display: flex;
+                  flex-direction: column;
+                  width: 100px;
+
+                    input[name=bet]{
+                      width: 100%;
+                      height: 25px;
+                      font-size: 18px;
+                      margin-top: 5px;
+                    }
+
+                    select[name=term]{
+                      width: 100%;
+                      height: 25px;
+                      font-size: 18px;
+                      margin-top: 5px;
+                    }
+                }
+            }
+        }
+    
+    }
+}
+
+.span_text{
+  font-size: 15px;
+  color: #585858; 
+}
+
+.span_result_money{
+  float: right;
+  color: #000;
+}
+
+p{
+  color:#747474;
+}
