@@ -5,7 +5,28 @@ export default function App(props) {
   const [price,setprice] = useState(2000000);
   const [term,setterm] = useState(1);
   const [Bet,setBet] = useState(9.5);
+  const [currency, setCurrency] = useState("₽");
   let all_data = {};
+  let arr_term = [
+    {term: "1 месяц", term_value: "1",},
+    {term: "3 месяца", term_value: "3",},
+    {term: "6 месяцев", term_value: "6",},
+    {term: "9 месяцев", term_value: "9",},
+    {term: "1 год", term_value: "12",},
+    {term: "1,5 года", term_value: "18",},
+    {term: "2 года", term_value: "24",},
+    {term: "3 года", term_value: "36",},
+    {term: "4 года", term_value: "48",},
+    {term: "5 лет", term_value: "60",},
+    {term: "6 лет", term_value: "72",},
+    {term: "7 лет", term_value: "84",},
+    {term: "10 лет", term_value: "120",},
+    {term: "15 лет", term_value: "180",},
+    {term: "20 лет", term_value: "240",},
+    {term: "25 лет", term_value: "300",},
+    {term: "30 лет", term_value: "360",},
+  ];
+  let arr_term_option = [];
 
   const Total_sum = () =>{
     let msp = Bet / 12 / 100; //Месячная процентная ставка
@@ -19,9 +40,14 @@ export default function App(props) {
       all_data.all_pay = Math.round(all_pay, 0);
   }
 
-  
+  const list_term = () =>{
+    arr_term.map((elem)=>{
+      return arr_term_option.push(<option key={elem.term_value} value={elem.term_value}>{elem.term}</option>);
+    });
+  }
 
   Total_sum();
+  list_term();
 
   return (
     <>
@@ -30,29 +56,20 @@ export default function App(props) {
         <div onChange={Total_sum} id="form_calc">
           <div id="form_calc_first">
             <span className="span_text">Сумма кредита</span>
-            <input type="text" value={price} onInput={(e)=>setprice(+e.target.value)} name="price" placeholder="0" /> 
+            <div>
+              <input type="number" value={price} onInput={(e)=>setprice(+e.target.value)} name="price" placeholder="0" />
+              <select id="currency" onChange={(e) => setCurrency(e.target.value)}>
+                <option value="₽">₽</option>
+                <option value="€">€</option>
+                <option value="$">$</option>
+              </select> 
+            </div>
           </div>
           <div id="form_calc_second">
             <div id="form_calc_second_child_1">
               <span className="span_text">Срок</span>
               <select name="term" value={term} onChange={(e)=>setterm(+e.target.value)}>             
-                  <option value="1">1 месяц</option>
-                  <option value="3">3 месяца</option>
-                  <option value="6">6 месяцев</option>
-                  <option value="9">9 месяцев</option>
-                  <option value="12">1 год</option>
-                  <option value="18">1,5 года</option>
-                  <option value="24">2 года</option>
-                  <option value="36">3 года</option>
-                  <option value="48">4 года</option>
-                  <option value="60">5 лет</option>
-                  <option value="72">6 лет</option>
-                  <option value="84">7 лет</option>
-                  <option value="120">10 лет</option>
-                  <option value="180">15 лет</option>
-                  <option value="240">20 лет</option>
-                  <option value="300">25 лет</option>
-                  <option value="360">30 лет</option>
+                  {arr_term_option}
               </select>
             </div>
             <div id="form_calc_second_child_2">
@@ -63,9 +80,9 @@ export default function App(props) {
         </div>
         <div>
           <h1>Результаты расчета</h1>
-          <p>Ежемесячный платеж <span className="span_result_money">{all_data.month_pay}</span></p>
-          <p>Переплата по кредиту <span className="span_result_money">{all_data.overpayment}</span></p>
-          <p>Общая выплата <span className="span_result_money">{all_data.all_pay}</span></p>
+          <p>Ежемесячный платеж <span className="span_result_money">{all_data.month_pay}{currency}</span></p>
+          <p>Переплата по кредиту <span className="span_result_money">{all_data.overpayment}{currency}</span></p>
+          <p>Общая выплата <span className="span_result_money">{all_data.all_pay}{currency}</span></p>
         </div>
     </div>
     </>
